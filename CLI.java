@@ -74,7 +74,7 @@ public class CLI {
         System.out.print("Choose type: ");
         int type = scanner.nextInt();
         scanner.nextLine(); // consume newline
-
+    
         String identifier;
         if (type == 1) {
             System.out.print("Enter username: ");
@@ -83,10 +83,10 @@ public class CLI {
             System.out.print("Enter name: ");
             identifier = scanner.nextLine();
         }
-
+    
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-
+    
         String userType = (type == 1) ? "Buyer" : "Seller";
         if (userManager.checkUser(identifier, password, userType)) {
             System.out.println("Logged in successfully as " + userType);
@@ -94,5 +94,6 @@ public class CLI {
             System.out.println("Incorrect username or password. Please try again.");
             start(); // Retour au menu principal
         }
-    }    
+    }
+    
 }

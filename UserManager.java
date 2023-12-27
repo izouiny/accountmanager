@@ -40,12 +40,22 @@ public class UserManager {
     }
     
 
-    public boolean checkUser(String name, String password, String userType) {
+    public boolean checkUser(String identifier, String password, String userType) {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values[0].equals(userType) && values[1].equals(name) && values[4].equals(password)) {
+                boolean isUserMatch = false;
+    
+                if (userType.equals("Buyer") && values[0].equals(userType)) {
+                    // Pour les acheteurs, vérifiez le username (supposons qu'il soit en 3ème position)
+                    isUserMatch = values[6].equals(identifier);
+                } else if (userType.equals("Seller") && values[0].equals(userType)) {
+                    // Pour les revendeurs, vérifiez le name (supposons qu'il soit en 2ème position)
+                    isUserMatch = values[1].equals(identifier);
+                }
+    
+                if (isUserMatch && values[4].equals(password)) {
                     return true;
                 }
             }
@@ -54,4 +64,5 @@ public class UserManager {
         }
         return false;
     }
+    
 }
