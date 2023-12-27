@@ -38,6 +38,8 @@ public class CLI {
         String email = scanner.nextLine();
         System.out.print("Enter phone: ");
         String phone = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
 
         System.out.println("1. Buyer\n2. Seller");
         System.out.print("Choose type: ");
@@ -52,14 +54,16 @@ public class CLI {
             System.out.print("Enter shipping address: ");
             String shippingAddress = scanner.nextLine();
 
-            Buyer buyer = new Buyer(name, firstName, username, email, phone, shippingAddress);
+            Buyer buyer = new Buyer(name, firstName, username, email, phone, shippingAddress, password);
             userManager.addUser(buyer);
+            System.out.println("Buyer account created successfully.");
         } else if (type == 2) {
             System.out.print("Enter address: ");
             String address = scanner.nextLine();
 
-            Seller seller = new Seller(name, email, phone, address);
+            Seller seller = new Seller(name, email, phone, address, password);
             userManager.addUser(seller);
+            System.out.println("Seller account created successfully.");
         } else {
             System.out.println("Invalid type.");
         }
@@ -68,17 +72,21 @@ public class CLI {
     private void logIn() {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+    
         System.out.println("1. Buyer\n2. Seller");
         System.out.print("Choose type: ");
         int type = scanner.nextInt();
         scanner.nextLine(); // consume newline
-
+    
         String userType = (type == 1) ? "Buyer" : "Seller";
-        if (userManager.checkUser(name, userType)) {
+        if (userManager.checkUser(name, password, userType)) {
             System.out.println("Logged in successfully as " + userType);
+            // Vous pouvez ajouter ici la logique pour les actions après la connexion réussie
         } else {
-            System.out.println("User not found.");
+            System.out.println("Incorrect username or password. Please try again.");
+            start(); // Retour au menu principal
         }
-    }
+    }    
 }
-
